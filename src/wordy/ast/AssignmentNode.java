@@ -3,6 +3,8 @@ package wordy.ast;
 import java.util.Map;
 import java.util.Objects;
 
+import wordy.interpreter.EvaluationContext;
+
 import static wordy.ast.Utils.orderedMap;
 
 public class AssignmentNode extends StatementNode {
@@ -19,6 +21,12 @@ public class AssignmentNode extends StatementNode {
         return orderedMap(
             "variable", variable,
             "expression", expression);
+    }
+
+    @Override
+    public void run(EvaluationContext context) {
+        context.trace(this);
+        context.set(variable.name, expression.evaluate(context));
     }
 
     @Override

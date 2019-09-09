@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import wordy.interpreter.EvaluationContext;
+
 public class BlockNode extends StatementNode {
     public static final BlockNode EMPTY = new BlockNode();
 
@@ -27,6 +29,13 @@ public class BlockNode extends StatementNode {
             result.put(String.valueOf(index), iter.next());
         }
         return result;
+    }
+
+    @Override
+    public void run(EvaluationContext context) {
+        context.trace(this);
+        for(var statement: statements)
+            statement.run(context);
     }
 
     @Override

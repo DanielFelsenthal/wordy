@@ -4,6 +4,8 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.Objects;
 
+import wordy.interpreter.EvaluationContext;
+
 public final class ConstantNode extends ExpressionNode {
     public final double value;
 
@@ -14,6 +16,12 @@ public final class ConstantNode extends ExpressionNode {
     @Override
     public Map<String, ASTNode> getChildren() {
         return Collections.emptyMap();
+    }
+
+    @Override
+    public double evaluate(EvaluationContext context) {
+        context.trace(this);
+        return value;
     }
 
     @Override

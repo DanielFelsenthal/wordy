@@ -3,6 +3,9 @@ package wordy.ast;
 import java.util.Map;
 import java.util.Objects;
 
+import wordy.interpreter.EvaluationContext;
+import wordy.interpreter.LoopExited;
+
 public class LoopNode extends StatementNode {
     public final StatementNode body;
 
@@ -13,6 +16,17 @@ public class LoopNode extends StatementNode {
     @Override
     public Map<String, ASTNode> getChildren() {
         return Map.of("body", body);
+    }
+
+    @Override
+    public void run(EvaluationContext context) {
+        context.trace(this);
+        try {
+            while(true)
+                body.run(context);
+        } catch(LoopExited e) {
+            // OK!
+        }
     }
 
     @Override

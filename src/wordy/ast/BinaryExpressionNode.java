@@ -3,6 +3,8 @@ package wordy.ast;
 import java.util.Map;
 import java.util.Objects;
 
+import wordy.interpreter.EvaluationContext;
+
 import static wordy.ast.Utils.orderedMap;
 
 public class BinaryExpressionNode extends ExpressionNode {
@@ -24,6 +26,27 @@ public class BinaryExpressionNode extends ExpressionNode {
         return orderedMap(
             "lhs", lhs,
             "rhs", rhs);
+    }
+
+    @Override
+    public double evaluate(EvaluationContext context) {
+        context.trace(this);
+        double leftValue = lhs.evaluate(context);
+        double rightValue = rhs.evaluate(context);
+        switch(operator) {
+            case ADDITION:
+                return leftValue + rightValue;
+            case SUBTRACTION:
+                return leftValue - rightValue;
+            case MULTIPLICATION:
+                return leftValue * rightValue;
+            case DIVISION:
+                return leftValue / rightValue;
+            case EXPONENTIATION:
+                return Math.pow(leftValue, rightValue);
+            default:
+                throw new UnsupportedOperationException();
+        }
     }
 
     @Override
