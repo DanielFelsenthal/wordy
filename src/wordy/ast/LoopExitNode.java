@@ -1,5 +1,6 @@
 package wordy.ast;
 
+import java.io.PrintWriter;
 import java.util.Collections;
 import java.util.Map;
 
@@ -19,6 +20,11 @@ public final class LoopExitNode extends StatementNode {
     public void run(EvaluationContext context) {
         context.trace(this);
         throw new LoopExited();
+    }
+
+    @Override
+    public void compile(PrintWriter out) {
+        out.println("break;");
     }
 
     @Override
