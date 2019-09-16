@@ -1,5 +1,7 @@
 package wordy.ast;
 
+import wordy.interpreter.EvaluationContext;
+
 import java.util.Map;
 import java.util.Objects;
 
@@ -66,5 +68,34 @@ public class ConditionalNode extends StatementNode {
     @Override
     protected String describeAttributes() {
         return "(operator=" + operator + ')';
+    }
+
+    @Override
+    public void run(EvaluationContext context) {
+        switch(operator) {
+            case EQUALS:
+                if(this.lhs.evaluate(context)==this.rhs.evaluate(context)) {
+                    ifTrue.run(context);
+                }
+                else
+                    ifFalse.run(context);
+                break;
+            case LESS_THAN:
+                if(this.lhs.evaluate(context)<this.rhs.evaluate(context)) {
+                    ifTrue.run(context);
+                }
+                else
+                    ifFalse.run(context);
+                break;
+            case GREATER_THAN:
+                if(this.lhs.evaluate(context)>this.rhs.evaluate(context)) {
+                    ifTrue.run(context);
+                }
+                else
+                    ifFalse.run(context);
+                break;
+            default:
+
+        }
     }
 }

@@ -126,6 +126,7 @@ public class Playground {
     private void reevaluate(StatementNode ast) {
         synchronized(this) {
             currentAST = ast;
+            System.out.println("BackStroke");
         }
 
         codeExecutionQueue.execute(() -> {

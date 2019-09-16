@@ -1,5 +1,7 @@
 package wordy.ast;
 
+import wordy.interpreter.EvaluationContext;
+
 import java.util.Collections;
 import java.util.Map;
 import java.util.Objects;
@@ -39,5 +41,10 @@ public final class ConstantNode extends ExpressionNode {
     @Override
     protected String describeAttributes() {
         return "(value=" + value + ')';
+    }
+
+    @Override
+    public double evaluate(EvaluationContext context) {
+        return this.value;
     }
 }
